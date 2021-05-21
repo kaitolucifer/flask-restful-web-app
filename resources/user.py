@@ -48,7 +48,7 @@ class User(Resource):
                     "password": auth_password,
                     "nickname": request.get_json().get("nickname"),
                     "comment": request.get_json().get("comment")}
-            user = patch_user_schema.load(data)
+            user = patch_user_schema.load(data, session=db.session)
             user.authenticate()
             user.check_permission(user_id)
             user.delete_from_db()
@@ -84,7 +84,7 @@ class Signup(Resource):
     def post(cls):
         try:
             data = request.get_json()
-            user = signup_schema.load(data)
+            user = signup_schema.load(data, session=db.session)
             user.save_to_db()
             return {
                 "message": "Account successfully created",
@@ -126,7 +126,7 @@ class Close(Resource):
         try:
             auth_user_id, auth_password = get_auth(request)
             data = {"user_id": auth_user_id, "password": auth_password}
-            user = close_schema.load(data)
+            user = close_schema.load(data, session=db.session)
             user.authenticate()
             user.delete_from_db()
         except AuthenticationFaildError as err:
