@@ -25,6 +25,7 @@ class RequiredError(Exception):
     def __init__(self, message="required user_id and password"):
         super().__init__(message)
 
+
 class GetUserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = UserModel
@@ -32,12 +33,8 @@ class GetUserSchema(ma.SQLAlchemyAutoSchema):
 
     @pre_load
     def _pre_load(self, data, **kwargs):
-        if not data.get('id') or not data.get("password"):
+        if not data.get('user_id') or not data.get("password"):
             raise RequiredError()
-
-        if not data.get("nickname") and not data.get("comment"):
-            raise RequiredError(message="required nickname or comment")
-
         return data
 
 
@@ -48,7 +45,7 @@ class PatchUserSchema(ma.SQLAlchemyAutoSchema):
 
     @pre_load
     def _pre_load(self, data, **kwargs):
-        if not data.get('id') or not data.get("password"):
+        if not data.get('user_id') or not data.get("password"):
             raise RequiredError()
 
         if not data.get("nickname") and not data.get("comment"):
@@ -64,7 +61,7 @@ class CloseSchema(ma.SQLAlchemyAutoSchema):
 
     @pre_load
     def _pre_load(self, data, **kwargs):
-        if not data.get('id') or not data.get("password"):
+        if not data.get('user_id') or not data.get("password"):
             raise RequiredError()
         return data
 

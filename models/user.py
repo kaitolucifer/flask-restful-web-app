@@ -33,9 +33,12 @@ class UserModel(db.Model):
     def find_by_user_id(cls, user_id):
         return cls.query.filter_by(user_id=user_id).first()
 
-    def save_to_db(self):
-        if self.find_by_user_id(self.user_id):
+    @classmethod
+    def check_user_existence(cls, user_id):
+        if cls.find_by_user_id(user_id):
             raise SameUserIDError()
+
+    def save_to_db(self):
         db.session.add(self)
         db.session.commit()
 

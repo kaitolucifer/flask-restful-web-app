@@ -1,3 +1,5 @@
+import argparse
+
 from werkzeug.utils import import_string
 from flask import Flask, jsonify
 from flask_restful import Api
@@ -24,4 +26,7 @@ def create_table():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-port", "-p")
+    args = parser.parse_args()
+    app.run(host="0.0.0.0", port=args.port)
