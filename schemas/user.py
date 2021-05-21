@@ -103,4 +103,7 @@ class SignupSchema(ma.SQLAlchemyAutoSchema):
         else:
             raise RequiredError()
 
+        if not data.get('nickname'):
+            data['nickname'] = data['user_id']
+
         return data

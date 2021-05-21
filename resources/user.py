@@ -126,4 +126,4 @@ class Close(Resource):
         except InvalidPasswordError:
             return {"message": "Authentication Faild"}, 401
         except (UserNotExistError, RequiredError):
-            pass
+            return {"message": "Account and user successfully removed"}, 200
