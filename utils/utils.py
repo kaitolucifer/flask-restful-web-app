@@ -2,8 +2,8 @@ import re
 import base64
 
 
-class AuthenticationFaildError(Exception):
-    def __init__(self, message="Authentication Faild"):
+class AuthenticationFailedError(Exception):
+    def __init__(self, message="Authentication Failed"):
         super().__init__(message)
 
 
@@ -20,7 +20,7 @@ def get_auth(request):
         auth_user_id, auth_password = token.decode().split(":")
         return auth_user_id, auth_password
     except:
-        raise AuthenticationFaildError()
+        raise AuthenticationFailedError()
 
 
 def check_updatable(request):

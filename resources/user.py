@@ -3,7 +3,7 @@ from flask_restful import Resource
 
 from schemas.user import CloseSchema, GetUserSchema, SignupSchema, PatchUserSchema, NonASCIIError, LengthTooLongError, LengthTooShortError, RequiredError
 from models.user import UserModel, SameUserIDError, InvalidPasswordError, UserNotExistError, NoPermissionError
-from utils.utils import get_auth, AuthenticationFaildError, check_updatable, NotUpdatableError
+from utils.utils import get_auth, AuthenticationFailedError, check_updatable, NotUpdatableError
 from db import db
 
 get_user_schema = GetUserSchema()
@@ -25,7 +25,7 @@ class User(Resource):
                 UserModel.find_by_user_id(auth_user_id))
             return {"message": "User details by user_id",
                     "user": user_data}, 200
-        except AuthenticationFaildError as err:
+        except AuthenticationFailedError as err:
             return {"message": str(err)}, 401
         except UserNotExistError as err:
             return {"message": str(err)}, 404
@@ -52,15 +52,15 @@ class User(Resource):
                     }
                 ]
             }, 200
-        except AuthenticationFaildError as err:
+        except AuthenticationFailedError as err:
             return {"message": str(err)}, 401
         except NotUpdatableError as err:
             return {
-                "message": "User updation Faild",
+                "message": "User updation Failed",
                 "cause": str(err)
             }, 400
         except InvalidPasswordError:
-            return {"message": "Authentication Faild"}, 401
+            return {"message": "Authentication Failed"}, 401
         except UserNotExistError as err:
             return {"message": str(err)}, 404
         except NoPermissionError as err:
@@ -121,9 +121,9 @@ class Close(Resource):
             user.authenticate()
             user.delete_from_db()
             return {"message": "Account and user successfully removed"}, 200
-        except AuthenticationFaildError as err:
+        except AuthenticationFailedError as err:
             return {"message": str(err)}, 401
         except InvalidPasswordError:
-            return {"message": "Authentication Faild"}, 401
+            return {"message": "Authentication Failed"}, 401
         except (UserNotExistError, RequiredError):
             return {"message": "Account and user successfully removed"}, 200

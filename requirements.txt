@@ -4,3 +4,5 @@ flask_sqlalchemy
 marshmallow
 flask_marshmallow  
 marshmallow-sqlalchemy
+gunicorn
+gevent

@@ -17,3 +17,7 @@
 </pre>
 
 A simple Flask-RESTful web application template.
+
+```
+gunicorn app:app -c gunicorn_config.py
+```
