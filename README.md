@@ -1,4 +1,4 @@
-# Go WebSocket Demo
+# Python Flask-RESTful web application
 
 <pre>
             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
